@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "weather-scrap"
+version = "0.1.0"
+description = ""
+authors = ["Richie <angela.xue3@gmail.com>"]
+readme = "README.md"
+packages = [{include = "weather_scrap"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+bs4 = "^0.0.1"
+webdriver-manager = "^3.8.6"
+selenium = "^4.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
