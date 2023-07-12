@@ -1,6 +1,4 @@
 from urllib.request import urlopen
-import re
-import time 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
@@ -50,10 +48,9 @@ while True:
 #Tags
 sorted_tags = sorted(tags.items(), key=lambda x: x[1], reverse=True)   
 
-
-
 #Write the tags to the file
 with open("tags.txt", "w") as file:
     file.write('\n'.join('{} {}'.format(x[0], x[1]) for x in sorted_tags))
 file.close()
+
 driver.quit()
