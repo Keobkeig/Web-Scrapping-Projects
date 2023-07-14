@@ -30,20 +30,22 @@ def get_links(url):
     wait.until(EC.presence_of_element_located((By.XPATH, "//div[@class='entry unvoted']")))
     
     soup = BeautifulSoup(driver.page_source, "html.parser")
+    links = driver.find_elements(By.XPATH, '//*[@data-type="comment"]/p/a[2]')
+    
     comments = soup.find_all("div", class_="entry unvoted")
-
+ 
     for comment in comments:
         body = comment.find("div", class_="md").text
         if (re.search(r'\b(?:awesome|fun|wow|amazing|love)\b', body)):
-            link = comment.find('a', class_='bylink').attrs['href']
+            link = links[comments.index(comment)].get_attribute('href')
             urls.append(link)
-
+    
     next_page = soup.find("span", class_="next-button")
     print(next_page)
     if next_page:
         next_page_link = next_page.find("a").attrs['href']
         get_links(next_page_link)
-
+    
 get_links(url)
 driver.quit()
 

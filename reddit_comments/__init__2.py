@@ -25,12 +25,18 @@ for url in df['url']:
     driver.get(url)
     page_source = driver.page_source
     print(df[df['url'] == url].index[0]) #progess bar
-    wait = WebDriverWait(driver, 10)
-    wait.until(EC.presence_of_element_located((By.XPATH, "//div[@class='entry unvoted']")))
+   
     soup = BeautifulSoup(driver.page_source, "html.parser")
-
-    title = soup.find("title").text
-    description = soup.find("meta", attrs={"name": "description"})['content']
+    title_tag = soup.find("title")
+    meta_tags = soup.find_all("meta")
+    
+    title = title_tag.text if title_tag else ""
+    description = ""
+    for tag in meta_tags:
+        if "name" in tag.attrs and tag.attrs["name"].lower() == "description":
+            description = tag.attrs["content"]
+            break
+    
     df.loc[df['url'] == url, 'title'] = title
     df.loc[df['url'] == url, 'description'] = description
 
